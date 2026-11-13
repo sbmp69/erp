@@ -1,0 +1,16 @@
+/* SaaS White-Label Custom Theme Styles */
+
+/* Hide any enterprise upgrade banners or trial notices */
+.oe_instance_buy,
+.oe_instance_register,
+.o_enterprise_label,
+.upgrade_banner,
+.o_upgrade_button {
+    display: none !important;
+}
+
+/* Ensure clean title and navbar typography */
+.o_main_navbar {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+

@@ -1,0 +1,23 @@
+# Virtual Environment
+venv/
+env/
+.venv/
+
+# Database & Runtime
+pgsql/
+odoo_data/
+*.log
+server.log
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyd
+
+# Temporary & Editor
+*.zip
+*.tar
+*.7z
+.vscode/
+.idea/
