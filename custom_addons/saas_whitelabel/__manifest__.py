@@ -10,6 +10,7 @@ SaaS White-Label Suite for Odoo 18
 * Removes/replaces Odoo links with your SaaS company domain.
 * Customizable SaaS documentation & support URLs in the user dropdown.
 * Configurable directly from Settings -> General Settings -> SaaS White-Label.
+* Blocks external Odoo Enterprise industry templates and sales upsells.
 * Ready for multi-tenant database routing and sub-domain isolation.
     """,
     'category': 'Administration',
@@ -21,6 +22,7 @@ SaaS White-Label Suite for Odoo 18
         'web',
         'portal',
         'base_setup',
+        'base_import_module',
     ],
     'data': [
         'data/ir_config_parameter_data.xml',
