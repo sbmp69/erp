@@ -11,6 +11,7 @@ SaaS White-Label Suite for Odoo 18
 * Customizable SaaS documentation & support URLs in the user dropdown.
 * Configurable directly from Settings -> General Settings -> SaaS White-Label.
 * Blocks external Odoo Enterprise industry templates and sales upsells.
+* Filters out third-party Chrome extension errors (MetaMask, etc.).
 * Ready for multi-tenant database routing and sub-domain isolation.
     """,
     'category': 'Administration',
@@ -32,11 +33,13 @@ SaaS White-Label Suite for Odoo 18
     'assets': {
         'web.assets_backend': [
             'saas_whitelabel/static/src/scss/whitelabel.scss',
+            'saas_whitelabel/static/src/js/extension_error_filter.js',
             'saas_whitelabel/static/src/js/title_service_patch.js',
             'saas_whitelabel/static/src/js/user_menu_patch.js',
         ],
         'web.assets_frontend': [
             'saas_whitelabel/static/src/scss/frontend_whitelabel.scss',
+            'saas_whitelabel/static/src/js/extension_error_filter.js',
         ],
     },
     'installable': True,
