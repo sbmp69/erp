@@ -1,27 +1,28 @@
 # -*- coding: utf-8 -*-
 {
-    'name': 'SaaS White-Label Suite',
+    'name': 'ConneuralERP White-Label & SaaS Suite',
     'version': '18.0.1.0.0',
-    'summary': 'Full White-Labeling, Custom Branding and Multi-Tenant SaaS Engine',
+    'summary': 'Full A-to-Z White-Labeling, Custom Branding and Multi-Tenant SaaS Engine for ConneuralERP',
     'description': """
-SaaS White-Label Suite for Odoo 18
-==================================
-* Complete white-labeling: dynamic brand name in page title, footer, and emails.
-* Removes/replaces Odoo links with your SaaS company domain.
-* Customizable SaaS documentation & support URLs in the user dropdown.
-* Configurable directly from Settings -> General Settings -> SaaS White-Label.
+ConneuralERP White-Label Suite for Odoo 18
+==========================================
+* Complete white-labeling: ConneuralERP brand name across page titles, footers, database managers, and email templates.
+* Replaces all Odoo links with ConneuralERP platform endpoints.
+* Custom ConneuralERP documentation & support URLs in the user menu.
+* Configurable from Settings -> General Settings -> SaaS White-Labeling & Branding.
 * Blocks external Odoo Enterprise industry templates and sales upsells.
 * Filters out third-party Chrome extension errors (MetaMask, etc.).
 * Ready for multi-tenant database routing and sub-domain isolation.
     """,
     'category': 'Administration',
-    'author': 'Your SaaS Team',
-    'website': 'https://yourcompany.com',
+    'author': 'Conneural Technologies',
+    'website': 'https://conneural.com',
     'license': 'LGPL-3',
     'depends': [
         'base',
         'web',
         'portal',
+        'mail',
         'base_setup',
         'base_import_module',
     ],
@@ -29,6 +30,7 @@ SaaS White-Label Suite for Odoo 18
         'data/ir_config_parameter_data.xml',
         'views/web_login_templates.xml',
         'views/res_config_settings_views.xml',
+        'views/mail_templates.xml',
     ],
     'assets': {
         'web.assets_backend': [

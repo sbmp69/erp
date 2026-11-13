@@ -1,67 +1,60 @@
-# CloudERP — White-Labeled Multi-Tenant SaaS Platform
+# ConneuralERP — White-Labeled Multi-Tenant SaaS Platform
 
-An enterprise-ready, white-labeled multi-tenant SaaS ERP built on top of Odoo 18.0 Community Edition.
-
----
-
-## Features
-
-- **Full White-Labeling**: Custom brand name, custom logo, custom favicon, debranded login screen, debranded portal, and debranded transactional email templates.
-- **Dynamic Web Title**: Owl JavaScript service patch keeps window titles synchronized with your SaaS platform brand (`CloudERP`) instead of Odoo.
-- **Cleaned User Navigation**: Odoo Account and upsell links removed; replaced with custom knowledge base and customer support URLs.
-- **Enterprise Debranding**: Integrated OCA `server-brand` modules (`remove_odoo_enterprise`, `disable_odoo_online`, `portal_odoo_debranding`) to strip all enterprise banners, upgrade notices, and telemetry.
-- **Multi-Tenant SaaS Routing**: Native database filtering (`dbfilter = ^%d$`) routes subdomains (e.g. `clienta.yourdomain.com`) to isolated client databases.
-- **Automated Tenant Onboarding**: CLI script `provision_tenant.py` for one-command tenant database creation, branding injection, and module installation.
+An enterprise-grade, fully white-labeled multi-tenant SaaS ERP engineered by Conneural Technologies.
 
 ---
 
-## Directory Structure
+## Overview
+
+ConneuralERP is a complete commercial SaaS platform delivering core business intelligence, operations, CRM, manufacturing, Point of Sale, and accounting without proprietary licensing dependencies.
+
+- **100% White-Labeled**: Debranded client UI, custom brand names, custom vectors and favicons, debranded login screens, and custom notification templates.
+- **Enterprise Upsell Protection**: Remote cloud upsells and proprietary dependencies blocked at the ORM layer.
+- **Multi-Tenant SaaS Engine**: Native subdomain-to-database routing via PostgreSQL database-per-tenant architecture (`dbfilter = ^%d$`).
+- **Instant Tenant Provisioning**: Automated onboarding CLI (`provision_tenant.py`) creates new client databases in seconds.
+- **Extension Shielding**: Silences third-party browser extensions (MetaMask, Honey, etc.) from triggering client errors.
+
+---
+
+## Directory Layout
 
 ```
 ├── custom_addons/
-│   ├── saas_whitelabel/      # Custom SaaS white-label & debranding addon
-│   └── server_brand/         # OCA debranding addons (remove_odoo_enterprise, etc.)
-├── odoo/                     # Odoo 18.0 Community core source
-├── odoo.conf                 # Odoo server configuration
-├── provision_tenant.py       # SaaS tenant provisioning CLI
-├── requirements-win.txt      # Windows Python requirements
-├── start_odoo.bat            # 1-click startup script for Windows
-├── stop_odoo.bat             # 1-click stop script for Windows
+│   ├── saas_whitelabel/      # ConneuralERP branding, debranding & shielding engine
+│   └── server_brand/         # OCA server branding suite
+├── odoo/                     # Core open-source engine
+├── odoo.conf                 # ConneuralERP server configuration
+├── provision_tenant.py       # Multi-tenant onboarding CLI
+├── requirements-win.txt      # Runtime dependencies
+├── start_odoo.bat            # One-click startup script
+├── stop_odoo.bat             # One-click shutdown script
 └── .gitignore
 ```
 
 ---
 
-## Quick Start (Local Development)
+## Quick Launch (Local)
 
-### 1. Requirements
-- Python 3.10 or 3.11 (64-bit)
-- PostgreSQL 14, 15, or 16
+1. Launch PostgreSQL and ConneuralERP:
+   ```cmd
+   start_odoo.bat
+   ```
+2. Navigate to: **http://localhost:8069**
+3. Default credentials:
+   - **Login**: `admin`
+   - **Password**: `admin`
 
-### 2. Install Dependencies
-```bash
-python -m venv venv
-venv\Scripts\activate
-pip install -r requirements-win.txt
-```
+---
 
-### 3. Launch the ERP
+## Provisioning a New Tenant
+
+To spin up a new isolated client database:
 ```cmd
-start_odoo.bat
-```
-Visit **http://localhost:8069** in your browser.
-
----
-
-## SaaS Tenant Provisioning
-
-Provision an isolated tenant database on the fly:
-```bash
-python provision_tenant.py --tenant acme --company "Acme Corp" --admin-email "admin@acme.com" --admin-password "secret123" --brand-name "CloudERP"
+python provision_tenant.py --tenant acme --company "Acme Corp" --admin-email "admin@acme.com" --admin-password "secret123"
 ```
 
 ---
 
-## Production Deployment (Nginx Reverse Proxy)
+## Production Deployment
 
-In production, run behind Nginx with wildcard subdomains (`*.yourdomain.com`) and set `dbfilter = ^%d$` in `odoo.conf` to automatically route incoming tenant subdomains to their dedicated databases.
+Configure your reverse proxy (Nginx/Traefik) with wildcard routing (`*.conneural.com`) directing to port `8069`, with `dbfilter = ^%d$` in `odoo.conf`.

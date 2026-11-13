@@ -6,17 +6,16 @@ set "PGSQL_BIN=%ERP_DIR%pgsql\bin"
 set "PGSQL_DATA=%ERP_DIR%pgsql\data"
 
 echo ============================================================
-echo Stopping CloudERP SaaS Local Environment
+echo Stopping ConneuralERP SaaS Platform
 echo ============================================================
 
-echo Stopping Odoo server processes...
+echo Stopping ConneuralERP server...
 taskkill /f /im python.exe /fi "WINDOWTITLE eq Odoo*" >nul 2>&1
 
-echo Stopping PostgreSQL server...
+echo Stopping PostgreSQL cluster...
 "%PGSQL_BIN%\pg_ctl.exe" -D "%PGSQL_DATA%" stop -m fast >nul 2>&1
 
-echo All services stopped successfully.
+echo ConneuralERP services stopped cleanly.
 echo ============================================================
 
 endlocal
-

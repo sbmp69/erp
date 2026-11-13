@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Debrand mail_notification_layout -->
+    <template id="mail_notification_layout_conneural" inherit_id="mail.mail_notification_layout" name="ConneuralERP Mail Notification Layout">
+        <xpath expr="//div[@t-if='show_footer']//a[contains(@href, 'odoo.com')]" position="replace">
+            <a target="_blank" t-att-href="request.env['ir.config_parameter'].sudo().get_param('saas_whitelabel.company_url', 'https://conneural.com') if request else 'https://conneural.com'"
+               t-att-style="'color: ' + (company.email_secondary_color or '#4F46E5') + ';'">
+                <t t-esc="request.env['ir.config_parameter'].sudo().get_param('saas_whitelabel.app_name', 'ConneuralERP') if request else 'ConneuralERP'"/>
+            </a>
+        </xpath>
+    </template>
+
+    <!-- Debrand mail_notification_light -->
+    <template id="mail_notification_light_conneural" inherit_id="mail.mail_notification_light" name="ConneuralERP Mail Notification Light">
+        <xpath expr="//td[@align='center']//a[contains(@href, 'odoo.com')]" position="replace">
+            <a target="_blank" t-att-href="request.env['ir.config_parameter'].sudo().get_param('saas_whitelabel.company_url', 'https://conneural.com') if request else 'https://conneural.com'"
+               t-att-style="'color: ' + (company.email_secondary_color or '#4F46E5') + ';'">
+                <t t-esc="request.env['ir.config_parameter'].sudo().get_param('saas_whitelabel.app_name', 'ConneuralERP') if request else 'ConneuralERP'"/>
+            </a>
+        </xpath>
+    </template>
+</odoo>
+

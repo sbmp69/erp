@@ -17,15 +17,15 @@ if (userMenuRegistry.contains("documentation")) {
     userMenuRegistry.remove("documentation");
 }
 
-// Add custom SaaS Documentation
+// Add custom ConneuralERP Documentation
 userMenuRegistry.add(
     "saas_documentation",
     (env) => {
-        const url = session.saas_documentation_url || "https://yourcompany.com/docs";
+        const url = session.saas_documentation_url || "https://conneural.com/docs";
         return {
             type: "item",
             id: "saas_documentation",
-            description: _t("Documentation"),
+            description: _t("Documentation & Guides"),
             href: url,
             callback: () => {
                 browser.open(url, "_blank");
@@ -41,11 +41,11 @@ if (userMenuRegistry.contains("support")) {
     userMenuRegistry.remove("support");
 }
 
-// Add custom SaaS Support
+// Add custom ConneuralERP Support
 userMenuRegistry.add(
     "saas_support",
     (env) => {
-        const url = session.saas_support_url || "https://yourcompany.com/support";
+        const url = session.saas_support_url || "https://conneural.com/support";
         return {
             type: "item",
             id: "saas_support",
@@ -59,4 +59,3 @@ userMenuRegistry.add(
     },
     { sequence: 20 }
 );
-

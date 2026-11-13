@@ -11,7 +11,7 @@ export const saasTitleService = {
     start(env) {
         const service = originalTitleService ? originalTitleService.start(env) : {};
         const originalSetParts = service.setParts;
-        const getBrandName = () => session.saas_brand_name || "CloudERP";
+        const getBrandName = () => session.saas_brand_name || "ConneuralERP";
 
         if (originalSetParts) {
             service.setParts = function (parts) {
@@ -31,7 +31,7 @@ export const saasTitleService = {
             };
         }
 
-        // Keep page title synchronized with the SaaS brand name
+        // Keep page title synchronized with ConneuralERP brand name
         const cleanTitle = () => {
             const brand = getBrandName();
             if (document.title.includes("Odoo")) {
@@ -39,7 +39,6 @@ export const saasTitleService = {
             }
         };
 
-        // Clean initial title and listen for modifications
         cleanTitle();
         if (typeof MutationObserver !== "undefined") {
             const titleEl = document.querySelector("title");
@@ -59,4 +58,3 @@ export const saasTitleService = {
 };
 
 serviceRegistry.add("title", saasTitleService, { force: true });
-

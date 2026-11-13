@@ -3,20 +3,19 @@
     <data noupdate="1">
         <record id="param_saas_app_name" model="ir.config_parameter">
             <field name="key">saas_whitelabel.app_name</field>
-            <field name="value">CloudERP</field>
+            <field name="value">ConneuralERP</field>
         </record>
         <record id="param_saas_company_url" model="ir.config_parameter">
             <field name="key">saas_whitelabel.company_url</field>
-            <field name="value">https://yourcompany.com</field>
+            <field name="value">https://conneural.com</field>
         </record>
         <record id="param_saas_support_url" model="ir.config_parameter">
             <field name="key">saas_whitelabel.support_url</field>
-            <field name="value">https://yourcompany.com/support</field>
+            <field name="value">https://conneural.com/support</field>
         </record>
         <record id="param_saas_doc_url" model="ir.config_parameter">
             <field name="key">saas_whitelabel.documentation_url</field>
-            <field name="value">https://yourcompany.com/docs</field>
+            <field name="value">https://conneural.com/docs</field>
         </record>
     </data>
 </odoo>
-

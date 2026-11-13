@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- Replace Powered by Odoo on the login form -->
-    <template id="login_layout_saas" inherit_id="web.login_layout" name="SaaS Login Debranding">
+    <!-- Replace Powered by Odoo on the login form with ConneuralERP -->
+    <template id="login_layout_saas" inherit_id="web.login_layout" name="ConneuralERP Login Debranding">
         <xpath expr="//a[contains(@href, 'odoo.com')]" position="replace">
-            <a t-att-href="request.env['ir.config_parameter'].sudo().get_param('saas_whitelabel.company_url', 'https://yourcompany.com')" target="_blank" class="text-decoration-none">
-                Powered by <span class="fw-bold" t-esc="request.env['ir.config_parameter'].sudo().get_param('saas_whitelabel.app_name', 'CloudERP')"/>
+            <a t-att-href="request.env['ir.config_parameter'].sudo().get_param('saas_whitelabel.company_url', 'https://conneural.com')" target="_blank" class="text-decoration-none">
+                Powered by <span class="fw-bold" t-esc="request.env['ir.config_parameter'].sudo().get_param('saas_whitelabel.app_name', 'ConneuralERP')"/>
             </a>
         </xpath>
     </template>
 
-    <!-- Replace default title on web layout -->
-    <template id="web_layout_saas" inherit_id="web.layout" name="SaaS Page Title">
+    <!-- Replace default title and favicon on web layout -->
+    <template id="web_layout_saas" inherit_id="web.layout" name="ConneuralERP Page Title">
         <xpath expr="//title" position="replace">
-            <title t-esc="title or request.env['ir.config_parameter'].sudo().get_param('saas_whitelabel.app_name', 'CloudERP')"/>
+            <title t-esc="title or request.env['ir.config_parameter'].sudo().get_param('saas_whitelabel.app_name', 'ConneuralERP')"/>
         </xpath>
     </template>
 </odoo>
-

@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-CloudERP Multi-Tenant SaaS Provisioning Script
-==============================================
-Quickly provisions isolated tenant databases with automatic white-labeling,
+ConneuralERP Multi-Tenant SaaS Provisioning Script
+==================================================
+Quickly provisions isolated tenant databases with automatic ConneuralERP white-labeling,
 admin user initialization, and pre-selected business modules.
 
 Usage:
@@ -22,20 +22,20 @@ ODOO_CONF = os.path.join(BASE_DIR, "odoo.conf")
 
 
 def parse_args():
-    parser = argparse.ArgumentParser(description="Provision a new SaaS tenant database in CloudERP.")
+    parser = argparse.ArgumentParser(description="Provision a new SaaS tenant database in ConneuralERP.")
     parser.add_argument("--tenant", required=True, help="Tenant identifier (subdomain/database name), e.g. acme")
     parser.add_argument("--company", required=True, help="Tenant company display name, e.g. 'Acme Corp'")
     parser.add_argument("--admin-email", default="admin@example.com", help="Tenant administrator email")
     parser.add_argument("--admin-password", default="admin", help="Tenant administrator password")
-    parser.add_argument("--brand-name", default="CloudERP", help="White-labeled platform name")
-    parser.add_argument("--modules", default="crm,sale_management", help="Comma-separated extra modules to install")
+    parser.add_argument("--brand-name", default="ConneuralERP", help="White-labeled platform name")
+    parser.add_argument("--modules", default="crm,sale_management,account,stock", help="Comma-separated extra modules to install")
     return parser.parse_args()
 
 
 def provision_tenant(args):
     db_name = args.tenant.lower().replace("-", "_").strip()
     print("=" * 60)
-    print(f"Provisioning SaaS Tenant: {args.company} (DB: {db_name})")
+    print(f"Provisioning ConneuralERP SaaS Tenant: {args.company} (DB: {db_name})")
     print("=" * 60)
 
     # Core white-label and security modules
@@ -43,7 +43,9 @@ def provision_tenant(args):
         "base",
         "web",
         "portal",
+        "mail",
         "base_setup",
+        "base_import_module",
         "saas_whitelabel",
         "remove_odoo_enterprise",
         "disable_odoo_online",
@@ -53,7 +55,7 @@ def provision_tenant(args):
     extra_modules = [m.strip() for m in args.modules.split(",") if m.strip()]
     all_modules = ",".join(base_modules + extra_modules)
 
-    print(f"[1/3] Initializing database and installing modules: {all_modules} ...")
+    print(f"[1/3] Initializing tenant database and installing modules: {all_modules} ...")
     cmd = [
         PYTHON_EXE,
         ODOO_BIN,
@@ -71,7 +73,7 @@ def provision_tenant(args):
         print(f"[ERROR] Failed to initialize database {db_name}. Return code: {res.returncode}")
         sys.exit(1)
 
-    print("[2/3] Configuring tenant company and admin credentials...")
+    print("[2/3] Configuring ConneuralERP tenant branding and admin credentials...")
     config_script = f"""
 import sys
 sys.path.insert(0, r'{os.path.join(BASE_DIR, "odoo")}')
@@ -99,33 +101,38 @@ with registry.cursor() as cr:
             'email': '{args.admin_email}',
         }})
     
-    # 3. Configure white-label branding parameters
+    # 3. Rename default bot to ConneuralBot
+    bot_partner = env.ref('base.partner_root', raise_if_not_found=False)
+    if bot_partner:
+        bot_partner.write({{'name': 'ConneuralBot'}})
+
+    # 4. Configure ConneuralERP white-label parameters
     param_obj = env['ir.config_parameter'].sudo()
     param_obj.set_param('saas_whitelabel.app_name', '{args.brand_name}')
-    param_obj.set_param('saas_whitelabel.company_url', 'https://yourcompany.com')
-    param_obj.set_param('saas_whitelabel.support_url', 'https://yourcompany.com/support')
-    param_obj.set_param('saas_whitelabel.documentation_url', 'https://yourcompany.com/docs')
+    param_obj.set_param('saas_whitelabel.company_url', 'https://conneural.com')
+    param_obj.set_param('saas_whitelabel.support_url', 'https://conneural.com/support')
+    param_obj.set_param('saas_whitelabel.documentation_url', 'https://conneural.com/docs')
     
     cr.commit()
-    print('Tenant customization applied successfully.')
+    print('ConneuralERP tenant configuration applied successfully.')
 """
 
     res2 = subprocess.run([PYTHON_EXE, "-c", config_script])
     if res2.returncode != 0:
         print("[WARNING] Tenant custom configuration encountered an issue.")
     else:
-        print("[3/3] Tenant provisioning complete!")
+        print("[3/3] ConneuralERP Tenant Provisioning Complete!")
         print("-" * 60)
+        print(f"Platform:        {args.brand_name}")
         print(f"Tenant Name:     {args.company}")
         print(f"Database:        {db_name}")
         print(f"Admin Login:     {args.admin_email}")
         print(f"Admin Password:  {args.admin_password}")
         print(f"Direct URL:      http://localhost:8069/web?db={db_name}")
-        print(f"Subdomain URL:   http://{db_name}.yourdomain.com:8069 (when dbfilter is active)")
+        print(f"Subdomain URL:   http://{db_name}.conneural.com:8069 (when dbfilter is active)")
         print("-" * 60)
 
 
 if __name__ == "__main__":
     args = parse_args()
     provision_tenant(args)
-
