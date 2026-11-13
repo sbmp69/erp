@@ -6,6 +6,18 @@ import { session } from "@web/session";
 const serviceRegistry = registry.category("services");
 const originalTitleService = serviceRegistry.get("title");
 
+// 1. Instantly rewrite URL path to clean /app prefix if /odoo is present
+if (typeof window !== "undefined" && window.location) {
+    if (window.location.pathname === "/odoo" || window.location.pathname.startsWith("/odoo/")) {
+        const cleanPath = window.location.pathname.replace(/^\/odoo/, "/app") + window.location.search + window.location.hash;
+        try {
+            window.history.replaceState(null, "", cleanPath);
+        } catch (e) {
+            // Ignore if restricted
+        }
+    }
+}
+
 export const saasTitleService = {
     ...originalTitleService,
     start(env) {
@@ -27,6 +39,12 @@ export const saasTitleService = {
                     document.title = document.title.replace(/\bOdoo\b/gi, getBrandName());
                 } else if (!document.title || document.title === "Odoo") {
                     document.title = getBrandName();
+                }
+
+                // Ensure URL keeps clean /app prefix
+                if (window.location.pathname.startsWith("/odoo")) {
+                    const clean = window.location.pathname.replace(/^\/odoo/, "/app") + window.location.search + window.location.hash;
+                    window.history.replaceState(null, "", clean);
                 }
             };
         }
