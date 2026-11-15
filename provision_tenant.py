@@ -86,10 +86,21 @@ registry = odoo.registry('{db_name}')
 with registry.cursor() as cr:
     env = odoo.api.Environment(cr, odoo.SUPERUSER_ID, {{}})
     
-    # 1. Update main company name
+    # 1. Update main company name and logo
+    logo_path = os.path.join(r'{BASE_DIR}', 'custom_addons', 'saas_whitelabel', 'static', 'src', 'img', 'logo.png')
+    logo_b64 = False
+    if os.path.exists(logo_path):
+        import base64
+        with open(logo_path, 'rb') as f:
+            logo_b64 = base64.b64encode(f.read()).decode('utf-8')
+
     company = env['res.company'].search([], limit=1)
     if company:
-        company.write({{'name': '{args.company}'}})
+        comp_vals = {{'name': '{args.company}'}}
+        if logo_b64:
+            comp_vals['logo'] = logo_b64
+            comp_vals['logo_web'] = logo_b64
+        company.write(comp_vals)
     
     # 2. Update administrator account
     admin_user = env['res.users'].search([('login', '=', 'admin')], limit=1)
